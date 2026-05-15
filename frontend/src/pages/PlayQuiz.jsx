@@ -36,6 +36,15 @@ const PlayQuiz = ({ poll, socket, activeUsers }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState(null); 
+  const [isReady, setIsReady] = useState(false);
+
+  const handleImReady = () => {
+    // Play a tiny silent sound to unlock audio
+    const audio = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==');
+    audio.play().catch(() => {});
+    setIsReady(true);
+  };
+
   useEffect(() => {
     if (!socket) return;
     
@@ -106,10 +115,27 @@ const PlayQuiz = ({ poll, socket, activeUsers }) => {
          </div>
          <h2 className="text-3xl font-extrabold text-white mb-2">{poll.title}</h2>
          <p className="text-gray-400 mb-8 text-lg">Waiting for the host to start...</p>
-         <div className="bg-dark-900/50 py-3 px-6 rounded-xl inline-block border border-white/5">
-           <span className="text-emerald-400 font-bold text-xl mr-2">{activeUsers}</span> 
-           <span className="text-gray-400 font-medium tracking-wide">players connected</span>
-         </div>
+         
+         {!isReady ? (
+           <button 
+             onClick={handleImReady}
+             className="btn-primary px-10 py-4 text-xl shadow-[0_0_40px_rgba(139,92,246,0.4)] animate-bounce"
+           >
+             I'm Ready! 🚀
+           </button>
+         ) : (
+           <div className="space-y-6">
+             <div className="bg-emerald-500/10 py-3 px-6 rounded-xl inline-block border border-emerald-500/20 text-emerald-400 font-bold">
+               <CheckCircle2 className="w-5 h-5 inline mr-2" />
+               Audio Unlocked & Ready
+             </div>
+             <br />
+             <div className="bg-dark-900/50 py-3 px-6 rounded-xl inline-block border border-white/5">
+               <span className="text-emerald-400 font-bold text-xl mr-2">{activeUsers}</span> 
+               <span className="text-gray-400 font-medium tracking-wide">players connected</span>
+             </div>
+           </div>
+         )}
        </div>
     );
   }

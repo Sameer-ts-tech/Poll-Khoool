@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { BarChart2, LogOut, User as UserIcon } from 'lucide-react';
+import { LogOut, User as UserIcon } from 'lucide-react';
+import logo from '../assets/pollingimage.png';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -14,11 +15,8 @@ const Navbar = () => {
   return (
     <nav className="glass-nav">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center space-x-2 text-white font-bold text-xl group">
-          <div className="bg-primary/20 p-2 rounded-lg group-hover:bg-primary/30 transition-colors">
-            <BarChart2 className="w-6 h-6 text-primary" />
-          </div>
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">Poll Khoool</span>
+        <Link to="/" className="flex items-center group">
+          <img src={logo} alt="Poll Khoool Logo" className="h-14 w-auto object-contain" />
         </Link>
 
         <div className="flex items-center space-x-4">
